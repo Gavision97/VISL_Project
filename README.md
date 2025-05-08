@@ -13,7 +13,7 @@ To ensure all dependencies are properly installed, we use a Conda environment.
 2. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/your-username/visl.git
+   git clone https://github.com/Gavision97/VISL_Project.git
    cd visl
    ```
 
