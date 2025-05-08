@@ -14,7 +14,7 @@ To ensure all dependencies are properly installed, we use a Conda environment.
 
    ```bash
    git clone https://github.com/Gavision97/VISL_Project.git
-   cd visl
+   cd VISL_Project
    ```
 
 3. **Create the Environment**
