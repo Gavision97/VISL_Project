@@ -5,17 +5,17 @@ class VISL(nn.Module):
         super(VISL, self).__init__()
         
         self.mlp = nn.Sequential(
-            nn.Linear(42, 64), 
-            nn.ReLU(), 
+            nn.Linear(34, 64), 
+            nn.LeakyReLU(0.1), 
             nn.BatchNorm1d(64),
             nn.Linear(64, 128),
-            nn.ReLU(),
+            nn.LeakyReLU(0.1),
             nn.BatchNorm1d(128),
             nn.Linear(128, 64),
-            nn.ReLU(),
+            nn.LeakyReLU(0.1),
             nn.BatchNorm1d(64),
             nn.Linear(64, 32),
-            nn.ReLU(),
+            nn.LeakyReLU(0.1),
             nn.BatchNorm1d(32),
 
             # final prediction - temperature
