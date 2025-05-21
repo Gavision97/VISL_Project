@@ -3,9 +3,11 @@ from imports import *
 class VISL(nn.Module):
     def __init__(self):
         super(VISL, self).__init__()
-        
+
+        # multilayer perceptron layer with linear layer follwed buy relu activation function and then bach normalization
+        # 39 -> 64 -> 128 -> 64 -> 32 -> 1 (final prediction)
         self.mlp = nn.Sequential(
-            nn.Linear(42, 64), 
+            nn.Linear(39, 64), 
             nn.ReLU(), 
             nn.BatchNorm1d(64),
             nn.Linear(64, 128),
@@ -17,15 +19,15 @@ class VISL(nn.Module):
             nn.Linear(64, 32),
             nn.ReLU(),
             nn.BatchNorm1d(32),
-
-            # final prediction - temperature
+            
+            # final prediction - temperature / rain etc..
             nn.Linear(32, 1)  
         )
 
     def forward(self, x):
         return self.mlp(x)
 
-
+# weather dataset object
 class WeatherDataset(Dataset):
     def __init__(self, features, targets):
         self.features = torch.tensor(features, dtype=torch.float32)
@@ -37,6 +39,7 @@ class WeatherDataset(Dataset):
     def __getitem__(self, idx):
         return self.features[idx], self.targets[idx]
 
+# function that takes features and labels columns, split the dataset (0.8, 0.1, 0.1)) & return weather dataset object for training, validating and testing phases
 def prepare_data(df, feature_cols, label_cols):
     X = df[feature_cols].values
     y = df[label_cols].values
@@ -54,8 +57,8 @@ def train_model(model, train_loader, val_loader, epochs, lr=5e-3, weight_decay=1
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
 
-    criterion = nn.MSELoss()
-    optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+    criterion = nn.L1Loss() # MAE loss function (mean absolut error)
+    optimizer = optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
 
     for epoch in range(epochs):
         model.train()
@@ -84,8 +87,8 @@ def train_model(model, train_loader, val_loader, epochs, lr=5e-3, weight_decay=1
 
         val_loss /= len(val_loader.dataset)
 
-        if (epoch + 1) % 10 == 0:
-            print(f"Epoch {epoch+1}/{epochs} | Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}")
+        #if (epoch + 1) % 10 == 0:
+            #print(f"Epoch {epoch+1}/{epochs} | Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}")
 
     return model
 
@@ -106,9 +109,10 @@ def evaluate_model(model, test_loader):
     predictions = np.vstack(predictions)
     actuals = np.vstack(actuals)
 
+    # 3 metrices: MAE, R^2 & EVS
     mae = mean_absolute_error(actuals, predictions)
     r2 = r2_score(actuals, predictions)
     evs = explained_variance_score(actuals, predictions)
     
-    print(f"\nTest MAE: {mae:.4f}, R²: {r2:.4f}, EVS: {evs:.4f}")
-    return predictions, actuals
+    #print(f"\nTest MAE: {mae:.4f}, R²: {r2:.4f}, EVS: {evs:.4f}")
+    return (round(mae, 4), round(r2, 4), round(evs, 4))
