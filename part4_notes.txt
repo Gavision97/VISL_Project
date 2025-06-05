@@ -1,0 +1,21 @@
+Report Structure:
+
+Title: How Pollutants and Air Pollution Affect the Climate in NYC
+
+Here is the revised abstract with your additional point about the VISL model results and future improvements:
+
+---
+
+**Abstract**
+
+Climate change has been a major concern in recent decades, and in our project, we aimed to explore one specific aspect of this global issue: the relationship between pollutants and climate. Our hypothesis was that changes in pollution levels directly influence climate variables. To investigate this, we focused on a defined geographic and temporal scope—New York City during the years 2016, 2018, 2020, and 2021. We specifically selected these years to examine potential environmental impacts during the COVID-19 pandemic, a time when urban activity, and presumably pollution, declined significantly.
+
+We collected air pollutant data from the U.S. Environmental Protection Agency (EPA) and weather data from a public Kaggle dataset. After extensive preprocessing—filtering for relevant boroughs near NYC (Bronx, Queens), removing distant counties, merging datasets by location and date, and handling missing values—we obtained a clean dataset of 2,896 records. Key features included pollutant concentrations (e.g., Ozone, NO), Air Quality Index (AQI), and various climate variables such as temperature and precipitation.
+
+Exploratory data analysis revealed significant insights, particularly a strong positive correlation between ozone levels and temperature. We also observed that pollutant levels dropped in 2020, supporting our hypothesis about reduced human activity during the pandemic.
+
+To predict climate variables from pollutant data, we developed a neural network model (MLP) named VISL and benchmarked it against traditional models like Linear Regression and Random Forest. While the VISL model performed reasonably well, its results were not yet satisfactory. This suggests that improvements are needed. In future work, we plan to enhance the model by engineering additional relevant features (e.g., urban activity indicators) and improving the architecture to better capture complex relationships.
+
+Our findings highlight a measurable link between pollution and climate, and demonstrate the potential of machine learning in environmental prediction tasks.
+
+
