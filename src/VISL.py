@@ -7,21 +7,27 @@ class VISL(nn.Module):
         # multilayer perceptron layer with linear layer follwed buy relu activation function and then bach normalization
         # 39 -> 64 -> 128 -> 64 -> 32 -> 1 (final prediction)
         self.mlp = nn.Sequential(
-            nn.Linear(39, 64), 
-            nn.ReLU(), 
-            nn.BatchNorm1d(64),
-            nn.Linear(64, 128),
-            nn.ReLU(),
+            nn.Linear(in_features=39, out_features=128, bias=False),
             nn.BatchNorm1d(128),
-            nn.Linear(128, 64),
-            nn.ReLU(),
-            nn.BatchNorm1d(64),
-            nn.Linear(64, 32),
-            nn.ReLU(),
+            nn.LeakyReLU(), 
+            nn.Linear(in_features=128, out_features=256, bias=False),
+            nn.BatchNorm1d(256),
+            nn.LeakyReLU(),
+            nn.Linear(in_features=256, out_features=512, bias=False),
+            nn.BatchNorm1d(512),
+            nn.LeakyReLU(),
+            nn.Linear(in_features=512, out_features=256, bias=False),
+            nn.BatchNorm1d(256),
+            nn.LeakyReLU(),
+            nn.Linear(in_features=256, out_features=128, bias=False),
+            nn.BatchNorm1d(128),
+            nn.LeakyReLU(),
+            nn.Linear(in_features=128,out_features=32, bias=False),
             nn.BatchNorm1d(32),
+            nn.LeakyReLU(), 
             
             # final prediction - temperature / rain etc..
-            nn.Linear(32, 1)  
+            nn.Linear(in_features=32, out_features=1)  
         )
 
     def forward(self, x):
