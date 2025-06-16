@@ -118,7 +118,8 @@ def evaluate_model(model, test_loader):
     # 3 metrices: MAE, R^2 & EVS
     mae = mean_absolute_error(actuals, predictions)
     r2 = r2_score(actuals, predictions)
-    evs = explained_variance_score(actuals, predictions)
+    #evs = explained_variance_score(actuals, predictions)
     
+    mape = mean_absolute_percentage_error(actuals, predictions)
     #print(f"\nTest MAE: {mae:.4f}, R²: {r2:.4f}, EVS: {evs:.4f}")
-    return (round(mae, 4), round(r2, 4), round(evs, 4))
+    return (round(mae, 4), round(r2, 4), round(mape, 4))

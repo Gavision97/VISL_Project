@@ -16,7 +16,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import (
     mean_absolute_error,
     r2_score,
-    explained_variance_score
+    explained_variance_score,
+    mean_absolute_percentage_error
 )
 
 import torch
